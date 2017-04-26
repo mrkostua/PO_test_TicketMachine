@@ -12,12 +12,13 @@ public class Test {
         }
 
         System.out.println("\n \n");
-
-        biletomat.sprzedajNormalnyBilet(2, 2, 3.20, LocalDate.now());
-        biletomat.sprzedajNormalnyBilet(1, 3, 8.90, LocalDate.now().minusDays(2));
+    //maks wrzucono pieniadz 10 zl
+        biletomat.sprzedajUlgowyBilet(0, 1, 8, LocalDate.now().minusDays(2));
+        biletomat.sprzedajNormalnyBilet(0, 3, 7.30, LocalDate.now().minusDays(2));
         biletomat.sprzedajUlgowyBilet(3, 1, 10, LocalDate.now());
-        biletomat.sprzedajNormalnyBilet(0, 1, 3, LocalDate.now());
-        biletomat.sprzedajUlgowyBilet(0, 1, 2, LocalDate.now().minusDays(2));
+        biletomat.sprzedajNormalnyBilet(0, 1, 8, LocalDate.now());
+        biletomat.sprzedajUlgowyBilet(0, 1, 8, LocalDate.now().minusDays(2));
+        biletomat.sprzedajUlgowyBilet(0, 1, 6.60, LocalDate.now().minusDays(2));
 
         System.out.println("\n \n");
         biletomat.wydrukujTransakcjeOkreslonaData(LocalDate.now().minusDays(2));

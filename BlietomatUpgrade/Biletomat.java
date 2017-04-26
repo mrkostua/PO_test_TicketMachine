@@ -6,6 +6,7 @@ import java.util.*;
 import DodatkowyPakiet.WyliczacReszty;
 import RodzajeBiletow.Normalny;
 import RodzajeBiletow.Ulgowy;
+import org.jetbrains.annotations.Contract;
 
 /**
  * @author Konstantyn Prysiazhnyi
@@ -22,12 +23,11 @@ public class Biletomat {
 	private List<Bilet> listaBiletow = new  ArrayList<>();
 	
 	private WyliczacReszty wyliczacReszty = new WyliczacReszty();
-	
+
 	public Biletomat(){
 		System.out.println(LOKALIZACJA_BILETU);
 	}
-	
-	
+
 	/**
 	 * @param date
 	 * @return
@@ -56,12 +56,12 @@ public class Biletomat {
 	public String sprzedajUlgowyBilet(int rodzajBiletu, int iloscBiletow, double wrzuconoPieniadz,LocalDate date){
 		double suma = 0.;
 		if(!(iloscBiletow >0)){
-			drukujBilet(false);
+            drukujBilet(false,"Ilosc biletow rowna sie 0");
 			return "";
 		}
 		suma = cenyBiletowUlgowe[rodzajBiletu] * iloscBiletow;
-			if(!(sprawdzaCzyWystarczajacoPieniadz(wrzuconoPieniadz,suma))){
-				drukujBilet(false);
+			if(sprawdzaCzyWystarczajacoPieniadz(wrzuconoPieniadz,suma)){
+                drukujBilet(false,"Nie wystarczajaco srodkow do zakupu bileta/ow");
 				return "";
 			}
 			
@@ -78,6 +78,7 @@ public class Biletomat {
 	
 
 	/**
+     * Przyklad kompozycji (tworzenie w klasie Biletomat objekty typu Bilet)
 	 * @param rodzajBiletu
 	 * @param iloscBiletow
 	 * @param wrzuconoPieniadz
@@ -90,7 +91,7 @@ public class Biletomat {
 			drukujBilet(false,"Ilosc biletow rowna sie 0");
 		
 		suma = cenyBiletowNormalne[rodzajBiletu] * iloscBiletow;
-		if(!(sprawdzaCzyWystarczajacoPieniadz(wrzuconoPieniadz,suma))){
+		if(sprawdzaCzyWystarczajacoPieniadz(wrzuconoPieniadz,suma)){
 			drukujBilet(false,"Nie wystarczajaco srodkow do zakupu bileta/ow");
 			return "";
 		}
@@ -106,23 +107,32 @@ public class Biletomat {
 		iloscSprzedanychBiletow ++;
 		return "";
 	}
-	
-	
+
+	/**
+	 *Ukrywanie implementacji
+	 * @param result
+	 */
 	private void drukujBilet(Boolean result){
 		if(result)
 		System.out.println(listaBiletow.get(listaBiletow.size()  - 1));
 	}
-	
+
+	/**
+	 *Ukrywanie implementacji
+	 * @param result
+	 * @param bladPowiadomienie
+	 */
 	private void drukujBilet(Boolean result,String bladPowiadomienie){
 		if(!result)
 			System.out.println("data : " + LocalDate.now() +" godzina : " + LocalTime.now() + " " + bladPowiadomienie);
 		else
 		System.out.println(listaBiletow.get(listaBiletow.size()  - 1));
 	}
-	
-	
-	
-//Wydruk informacj o wszystkich sprzedanych biletach 	
+
+	/**Wydruk informacj o wszystkich sprzedanych biletach
+	 *
+	 * @return
+	 */
 	@Override
 	public String toString() {
 		double dochod = 0.;
@@ -137,13 +147,18 @@ public class Biletomat {
 	}
 	return String.format("	Wszystkie sprzedane bilety %s \n Ilosc spzedanych biletow za ostatni czas"
 			+ " wynosi : %d \n dochod : %4.2f", wyswietl,iloscSprzedanychBiletow,dochod);
-	} 
+	}
 
-
+	/**
+	 *Ukrywanie implementacji
+	 * @param wrzucono
+	 * @param doZaplaty
+	 * @return
+	 */
 	private Boolean sprawdzaCzyWystarczajacoPieniadz(double wrzucono, double doZaplaty){
-	if(wrzucono < doZaplaty)
-		return false;
-	else
-		return true;
+		//max wrzucono 10zl
+		if(wrzucono > 10)
+			return  false;
+	return wrzucono < doZaplaty;
 	}
 }

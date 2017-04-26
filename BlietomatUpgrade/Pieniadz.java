@@ -17,6 +17,10 @@ public Pieniadz(double pieniadzy) {
 	this.pieniadzy = pieniadzy;
 }
 
+	/**
+	 *
+	 * @return
+	 */
 	@Override
 	public String toString() {
 		return String.format("%4.2f %s",pieniadzy,PLN);

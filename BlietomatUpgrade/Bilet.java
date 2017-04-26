@@ -32,7 +32,11 @@ public class Bilet {
 		this.reszta = reszta;
 	}
 
-@Override
+	/**
+	 *
+	 * @return
+	 */
+	@Override
 public String toString() {
 	return "Bilet [date : " + date + " " + LocalTime.now() + " "
 			+ ", rodzajBiletu : " + rodzajBiletu + " "
